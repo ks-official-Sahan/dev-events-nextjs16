@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///run/media/darknet/CE3C60353C601AAB/Programming/Practice/WEB/Next/dev_events_next16/instrumentation-client.ts"],"sourcesContent":["import posthog from \"posthog-js\";\n\nif (typeof window !== \"undefined\") {\n  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {\n    // api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,\n    api_host: \"/ingest\",\n    ui_host: \"https://us.posthog.com\",\n    defaults: \"2025-05-24\",\n    capture_exceptions: true, // This enables capturing exceptions using Error Tracking, set to false if you don't want this\n    debug: process.env.NODE_ENV === \"development\",\n  });\n}\nexport default posthog;\n"],"names":[],"mappings":";;;;AAGe;AAHf;;AAEA,wCAAmC;IACjC,yNAAO,CAAC,IAAI,sFAAuC;QACjD,kDAAkD;QAClD,UAAU;QACV,SAAS;QACT,UAAU;QACV,oBAAoB;QACpB,OAAO,oDAAyB;IAClC;AACF;uCACe,yNAAO"}}]
+}
