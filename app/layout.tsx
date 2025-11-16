@@ -1,4 +1,6 @@
+import Navbar from "@/components/layout/Navbar";
 import LightRays from "@/components/ui/LightRays";
+import { SEOConfig } from "@/config/seo";
 import type { Metadata } from "next";
 import { Martian_Mono, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
@@ -13,11 +15,7 @@ const martianMono = Martian_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Dev Events",
-  description:
-    "The Hub for Every Dev Event You Mustn't Miss. Check out sahansachintha.vercel.app for more info.",
-};
+export const metadata: Metadata = SEOConfig.home;
 
 export default function RootLayout({
   children,
@@ -29,6 +27,7 @@ export default function RootLayout({
       <body
         className={`${schibstedGrotesk.variable} ${martianMono.variable} min-h-dvh w-screen antialiased`}
       >
+        <Navbar />
         <div className="absolute inset-0 top-0 z-[-1] min-h-dvh">
           <LightRays
             raysOrigin="top-center-offset"
@@ -42,7 +41,7 @@ export default function RootLayout({
             distortion={0.01}
           />
         </div>
-        {children}
+        <main>{children}</main>
       </body>
     </html>
   );
