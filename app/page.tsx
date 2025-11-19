@@ -1,13 +1,25 @@
 import EventCard from "@/components/custom/EventCard";
 import ExploreBtn from "@/components/custom/ExploreBtn";
-import { events } from "@/lib/constants";
-import { time } from "console";
+import { IEvent } from "@/database/event.model";
 
-const Page = () => {
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+const Page = async () => {
+  const res = await fetch(`${BASE_URL}/api/events`, {
+    next: { revalidate: 60 },
+    // cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch events: ${res.status}`);
+  }
+
+  const { events } = await res.json();
+
   return (
     <section>
       <h1 className="text-center">
-        The Hub for Every Dev <br /> Event You Can't Miss
+        The Hub for Every Dev <br /> Event You Can&apos;t Miss
       </h1>
       <p className="text-center mt-5">
         Hackathons, Meetups, and Conferences, All in one place
@@ -18,12 +30,13 @@ const Page = () => {
         <h2>Featured Events</h2>
 
         <ul className="events">
-          {events.map((event) => (
-            <li key={event.title}>
-              <EventCard {...event} />
-              {/* <EventCard title={event.title} image={event.image} /> */}
-            </li>
-          ))}
+          {events &&
+            events.map((event: IEvent) => (
+              <li key={event.title} className="list-none">
+                <EventCard {...event} />
+                {/* <EventCard title={event.title} image={event.image} /> */}
+              </li>
+            ))}
         </ul>
       </div>
     </section>

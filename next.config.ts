@@ -7,6 +7,17 @@ const nextConfig: NextConfig = {
     turbopackFileSystemCacheForDev: true,
   },
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        // port: "",
+        // pathname: "/dbme0nn1m/**",
+      },
+    ],
+  },
+
   async rewrites() {
     return [
       {
