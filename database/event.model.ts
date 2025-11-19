@@ -72,10 +72,10 @@ const EventSchema = new Schema<IEvent>(
     mode: {
       type: String,
       required: [true, "Mode is required"],
-      enum: {
-        values: ["online", "offline", "hybrid"],
-        message: "Mode must be either online, offline, or hybrid",
-      },
+      // enum: {
+      //   values: ["online", "offline", "hybrid"],
+      //   message: "Mode must be either online, offline, or hybrid",
+      // },
     },
     audience: {
       type: String,
@@ -141,8 +141,8 @@ function generateSlug(title: string): string {
     .replace(/^-|-$/g, "");
 
   // Add timestamp or random suffix to ensure uniqueness
-  return `${baseSlug}-${Date.now()}`;
-  // return `${baseSlug}`;
+  // return `${baseSlug}-${Date.now().toString().slice(-5)}`;
+  return `${baseSlug}`;
 }
 
 // Helper function to normalize date to ISO format
