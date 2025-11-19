@@ -10,7 +10,17 @@ type RouteParams = {
 };
 
 // GET /api/events/[slug]
-// Returns a single event by its slug
+/**
+ * Fetches a single event by slug and returns a JSON HTTP response.
+ *
+ * @param _req - The incoming NextRequest (unused).
+ * @param params - A promise resolving to route parameters; expected to contain `slug`.
+ * @returns A NextResponse containing:
+ * - 200: { message: "Event retrieved successfully", event } when the event is found.
+ * - 400: { message: "Invalid slug parameter", error } when `slug` is missing or empty.
+ * - 404: { message: "Event not found", error } when no event matches the slug.
+ * - 500: { message, error } for database configuration, connection, or other server errors.
+ */
 export async function GET(_req: NextRequest, { params }: RouteParams) {
   try {
     await connectDB();

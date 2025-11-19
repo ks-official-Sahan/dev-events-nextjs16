@@ -131,6 +131,12 @@ EventSchema.pre("save", function (next) {
   next();
 });
 
+/**
+ * Create a URL-friendly slug from a title string.
+ *
+ * @param title - The source text (e.g., an event title) to convert into a slug
+ * @returns The generated slug: lowercased, trimmed, non-alphanumeric characters removed, consecutive spaces replaced with single hyphens, consecutive hyphens collapsed, and no leading or trailing hyphens
+ */
 function generateSlug(title: string): string {
   const baseSlug = title
     .toLowerCase()
