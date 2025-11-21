@@ -2,6 +2,7 @@ import BookEvent from "@/components/custom/BookEvent";
 import EventCard from "@/components/custom/EventCard";
 import { IEvent } from "@/database/event.model";
 import { getSimilarEventsBySlug } from "@/lib/actions/event.actions";
+import { cacheLife } from "next/cache";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -48,11 +49,14 @@ const EventDetailsPage = async ({
 }: {
   params: Promise<{ slug: string }>;
 }) => {
+  "use cache";
+  cacheLife("minutes");
+
   const { slug } = await params;
 
   const res = await fetch(`${BASE_URL}/api/events/${slug}`, {
-    next: { revalidate: 60 },
-    // cache: "no-store",
+    // next: { revalidate: 10*60 }, // No need for revalidation with cacheLife
+    // cache: "no-store", // not good with revalidations. // this stops caching entirely.
   });
 
   if (!res.ok) {
@@ -85,7 +89,8 @@ const EventDetailsPage = async ({
 
   const bookings = 15;
 
-  const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
+  // const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
+  const similarEvents = await getSimilarEventsBySlug(slug);
   console.log(similarEvents);
 
   return (

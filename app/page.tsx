@@ -1,13 +1,17 @@
 import EventCard from "@/components/custom/EventCard";
 import ExploreBtn from "@/components/custom/ExploreBtn";
 import { IEvent } from "@/database/event.model";
+import { cacheLife } from "next/cache";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 const Page = async () => {
+  'use cache'
+  cacheLife('hours')
+
   const res = await fetch(`${BASE_URL}/api/events`, {
-    next: { revalidate: 60 },
-    // cache: "no-store",
+    // next: { revalidate: 60 }, // This becomes in effective with cacheLife.
+    // cache: "no-store", // not good with revalidations. // this stops caching entirely.
   });
 
   if (!res.ok) {
