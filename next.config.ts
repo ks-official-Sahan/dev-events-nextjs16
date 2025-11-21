@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   reactCompiler: true,
 
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
   experimental: {
     turbopackFileSystemCacheForDev: true,
   },

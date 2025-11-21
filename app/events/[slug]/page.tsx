@@ -50,7 +50,7 @@ const EventDetailsPage = async ({
   params: Promise<{ slug: string }>;
 }) => {
   "use cache";
-  cacheLife("minutes");
+  cacheLife("hours");
 
   const { slug } = await params;
 
@@ -70,6 +70,7 @@ const EventDetailsPage = async ({
   if (!event) return notFound();
 
   const {
+    _id,
     title,
     description,
     overview,
@@ -83,8 +84,6 @@ const EventDetailsPage = async ({
     agenda,
     organizer,
     tags,
-    createdAt,
-    updatedAt,
   }: IEvent = event;
 
   const bookings = 15;
@@ -167,7 +166,7 @@ const EventDetailsPage = async ({
               <p className="text-sm">Be the first to book your spot!</p>
             )}
 
-            <BookEvent />
+            <BookEvent eventId={_id} slug={slug} />
           </div>
         </aside>
       </div>
@@ -177,7 +176,9 @@ const EventDetailsPage = async ({
         <div className="events">
           {similarEvents.length > 0 &&
             similarEvents.map((event) => (
-              <EventCard {...event} key={event.id} />
+              <div key={event._id}>
+                <EventCard {...event} />
+              </div>
             ))}
         </div>
       </div>
