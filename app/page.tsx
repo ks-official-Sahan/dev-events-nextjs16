@@ -1,6 +1,7 @@
 import EventCard from "@/components/custom/event/EventCard";
 import ExploreBtn from "@/components/custom/home/ExploreBtn";
 import { IEvent } from "@/database/event.model";
+import { events } from "@/lib/constants";
 import { cacheLife } from "next/cache";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -9,16 +10,16 @@ const Page = async () => {
   "use cache";
   cacheLife("hours");
 
-  const res = await fetch(`${BASE_URL}/api/events`, {
-    // next: { revalidate: 60 }, // This becomes in effective with cacheLife.
-    // cache: "no-store", // not good with revalidations. // this stops caching entirely.
-  });
+  // const res = await fetch(`${BASE_URL}/api/events`, {
+  //   // next: { revalidate: 60 }, // This becomes in effective with cacheLife.
+  //   // cache: "no-store", // not good with revalidations. // this stops caching entirely.
+  // });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch events: ${res.status}`);
-  }
+  // if (!res.ok) {
+  //   throw new Error(`Failed to fetch events: ${res.status}`);
+  // }
 
-  const { events } = await res.json();
+  // const { events } = await res.json();
 
   return (
     <section>
@@ -35,7 +36,8 @@ const Page = async () => {
 
         <ul className="events">
           {events &&
-            events.map((event: IEvent) => (
+            // events.map((event: IEvent) => (
+            events.map((event) => (
               <li key={event.title} className="list-none">
                 <EventCard {...event} />
                 {/* <EventCard title={event.title} image={event.image} /> */}
